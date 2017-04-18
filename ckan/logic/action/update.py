@@ -73,10 +73,10 @@ class LoggingDebugger(bdb.Bdb):
         )
 DBG = LoggingDebugger()
 # }}}
-def resource_update(context, data_dict):
+def __resource_update(context, data_dict):
     return DBG.runcall(_resource_update, context, data_dict)
 
-def _resource_update(context, data_dict):
+def resource_update(context, data_dict):
     '''Update a resource.
 
     To update a resource you must be authorized to update the dataset that the
