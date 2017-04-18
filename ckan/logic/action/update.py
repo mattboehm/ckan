@@ -41,7 +41,42 @@ ValidationError = logic.ValidationError
 _get_or_bust = logic.get_or_bust
 
 
+# DEBUG CODE {{{
+import bdb
+import sys
+class LoggingDebugger(bdb.Bdb):
+    def __init__(self, outfile=sys.stderr, skip=None):
+        bdb.Bdb.__init__(self)
+        self.outfile = outfile
+    def user_call(self, frame, args):
+        self.outfile.write(
+            "````{file}:{line} <<< {func}\n".format(
+                file=frame.f_code.co_filename,
+                line=frame.f_lineno,
+                func=frame.f_code.co_name
+            )
+        )
+    def user_line(self, frame):
+        self.outfile.write(
+            "````{file}:{line}\n".format(
+                file=frame.f_code.co_filename,
+                line=frame.f_lineno
+            )
+        )
+    def user_return(self, frame, retval):
+        self.outfile.write(
+            "````{file}:{line} <<< {func}\n".format(
+                file=frame.f_code.co_filename,
+                line=frame.f_lineno,
+                func=frame.f_code.co_name
+            )
+        )
+DBG = LoggingDebugger()
+# }}}
 def resource_update(context, data_dict):
+    return DBG.runcall(_resource_update, context, data_dict)
+
+def _resource_update(context, data_dict):
     '''Update a resource.
 
     To update a resource you must be authorized to update the dataset that the
