@@ -180,6 +180,7 @@ def augment_data(data, schema):
         if key in full_schema:
             continue
 
+        sys.stderr.write(u"~~~~~! {} || {}\n".format(key, value).encode("utf-8", "replace"))
         # check if any thing naughty is placed against subschemas
         initial_tuple = key[::2]
         if initial_tuple in [initial_key[:len(initial_tuple)]
@@ -199,11 +200,14 @@ def augment_data(data, schema):
             junk[key] = value
             new_data[("__junk",)] = junk
         new_data.pop(key)
+        sys.stderr.write(u"~~~~~@ {}\n".format(new_data).encode("utf-8", "replace"))
 
     # add missing
 
+    sys.stderr.write(u"~~~~~& {} || {}\n".format(full_schema, new_data).encode("utf-8", "replace"))
     for key, value in full_schema.items():
         if key not in new_data and not key[-1].startswith("__"):
+            sys.stderr.write(u"~~~~~^ {} || {}\n".format(full_schema, new_data).encode("utf-8", "replace"))
             new_data[key] = missing
 
     sys.stderr.write(u"~~~~~$ {}\n".format(new_data).encode("utf-8", "replace"))
