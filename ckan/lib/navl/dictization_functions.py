@@ -170,13 +170,13 @@ def augment_data(data, schema):
 
     new_data = copy.copy(data)
 
-    sys.stderr.write("~~~~~ {} || {} || {} || {} || {}\n".format(schema, flattened_schema, key_combinations, full_schema, data))
+    sys.stderr.write("~~~~~ {} || {} || {} || {} || {}\n".format(schema, flattened_schema, key_combinations, full_schema, data).encode("utf-8"))
 
     # fill junk and extras
 
     for key, value in new_data.items():
 
-        sys.stderr.write("~~~~~# {} || {}\n".format(key, value))
+        sys.stderr.write("~~~~~# {} || {}\n".format(key, value).encode("utf-8"))
         if key in full_schema:
             continue
 
@@ -206,7 +206,7 @@ def augment_data(data, schema):
         if key not in new_data and not key[-1].startswith("__"):
             new_data[key] = missing
 
-    sys.stderr.write("~~~~~$ {}\n".format(new_data))
+    sys.stderr.write("~~~~~$ {}\n".format(new_data).encode("utf-8"))
     return new_data
 
 
