@@ -64,8 +64,11 @@ this.ckan.module('image-upload', function($, _) {
       this.field_clear = $('<input type="hidden" name="clear_upload">')
         .appendTo(this.el);
 
+      // Generate a unique ID if the input doesn't have one (so that the input can be selected in the code below)
+      this.input.uniqueId();
+
       // Button to set the field to be a URL
-      this.button_url = $('<a href="javascript:;" class="btn"><i class="icon-globe"></i>'+this.i18n('url')+'</a>')
+      this.button_url = $('<a href="javascript:$(\'#'+this.input.attr('id')'\').click();" class="btn"><i class="icon-globe"></i>'+this.i18n('url')+'</a>')
         .prop('title', this.i18n('url_tooltip'))
         .on('click', this._onFromWeb)
         .insertAfter(this.input);
