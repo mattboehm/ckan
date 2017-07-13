@@ -68,7 +68,7 @@ this.ckan.module('image-upload', function($, _) {
       this.input.uniqueId();
 
       // Button to set the field to be a URL
-      this.button_url = $('<a href="javascript:$(\'#'+this.input.attr('id')'\').click();" class="btn"><i class="icon-globe"></i>'+this.i18n('url')+'</a>')
+      this.button_url = $('<a href="javascript:$(\'#'+this.input.attr('id')+'\').click();" class="btn"><i class="icon-globe"></i>'+this.i18n('url')+'</a>')
         .prop('title', this.i18n('url_tooltip'))
         .on('click', this._onFromWeb)
         .insertAfter(this.input);
